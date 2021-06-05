@@ -72,7 +72,7 @@ public class JDepsAnalyzer {
     return packages;
   }
 
-  public Set<PackageRepresentation> analyzeLines(Map<String, Set<PackageRepresentationImplem>> packages, String jarName, Stream<String> lines, int packageDepth) {
+  private Set<PackageRepresentation> analyzeLines(Map<String, Set<PackageRepresentationImplem>> packages, String jarName, Stream<String> lines, int packageDepth) {
     Map<String, Set<String>> representations = lines
         .filter(line -> !line.matches(".*jar -> .*"))
         .map(line -> line.split("->"))
