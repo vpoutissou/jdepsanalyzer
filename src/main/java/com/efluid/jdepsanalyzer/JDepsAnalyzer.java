@@ -1,8 +1,5 @@
 package com.efluid.jdepsanalyzer;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,29 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class JDepsAnalyzer {
-
-  public static void main(String[] args) {
-    try {
-      Set<PackageRepresentation> packages = new JDepsAnalyzer().analyze(Files.readAllLines(Path.of(args[0])), 4);
-      packages.stream().collect(Collectors.groupingBy(pack -> pack.getJarName())).
-      forEach((jarName, packs) -> {
-        System.out.println(jarName);
-        for (var pack : packs) {
-          if(pack.isOkForIsolation()) {
-            System.out.println(pack.getName() + " OK");
-          } else {
-            String cycle = pack.getCycle().stream().map(PackageRepresentation::getName)
-                .collect(Collectors.joining("\t\n-> "));
-            System.out.println(pack.getName() + " KO");
-            System.out.println(cycle);
-          }
-        }
-      });
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
 
   public Set<PackageRepresentation> analyze(String string) {
     return analyze(string, 0);
