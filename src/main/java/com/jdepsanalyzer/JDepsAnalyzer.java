@@ -43,6 +43,9 @@ public class JDepsAnalyzer {
       }
     }
     packages.addAll(analyzeLines(packagesByJar, jarName, jarLines.stream(), packageDepth));
+    packages.stream()
+            .map(PackageRepresentationImplem.class::cast)
+            .forEach(PackageRepresentationImplem::checkIsolation);
     return packages;
   }
 
@@ -85,6 +88,7 @@ public class JDepsAnalyzer {
 
   private static class PackageRepresentationImplem implements PackageRepresentation {
 
+    private boolean okForIsolation = false;
     private final String name;
     private final String jarName;
     private final Set<PackageRepresentation> dependencies;
@@ -127,10 +131,14 @@ public class JDepsAnalyzer {
 
     @Override
     public boolean isOkForIsolation() {
-      return isOkForIsolation(this, dependencies, new HashSet<>());
+      return okForIsolation;
     }
 
-    private boolean isOkForIsolation(PackageRepresentation searchedFor, Set<PackageRepresentation> dependencies, Set<PackageRepresentation> seenPackages) {
+    public void checkIsolation() {
+      okForIsolation = checkIsolation(this, dependencies, new HashSet<>());
+    }
+
+    private boolean checkIsolation(PackageRepresentation searchedFor, Set<PackageRepresentation> dependencies, Set<PackageRepresentation> seenPackages) {
       if (dependencies.isEmpty()) {
         return true;
       }
@@ -145,7 +153,7 @@ public class JDepsAnalyzer {
             .collect(Collectors.toSet());
         seenPackages.addAll(nextDependencies);
         cycle.add(dependency);
-        if (!isOkForIsolation(searchedFor, nextDependencies, seenPackages)) {
+        if (!checkIsolation(searchedFor, nextDependencies, seenPackages)) {
           return false;
         }
         cycle.remove(cycle.size() - 1);
