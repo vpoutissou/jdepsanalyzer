@@ -1,4 +1,4 @@
-package com.efluid.jdepsanalyzer;
+package com.jdepsanalyzer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,4 +1,4 @@
-package com.efluid.jdepsanalyzer;
+package com.jdepsanalyzer;
 
 import java.io.IOException;
 import java.nio.file.Files;
