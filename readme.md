@@ -9,5 +9,5 @@ Then call call Launcher by passing the path to the file as an argument.
 
 ```
 jdeps myjar.jar > dependencies.txt
-java -cp jdepsanalyzer-0.0.1-SNAPSHOT com.jdepsanalyzer.Launcher "dependencies.txt"
+java -jar jdepsanalyzer-0.0.1-SNAPSHOT "dependencies.txt"
 ```
