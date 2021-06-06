@@ -31,7 +31,7 @@ public class JDepsAnalyzer {
       if (line.matches(".*jar +->.*")) {
         String newJar = line.split("->")[0].strip();
         if (!newJar.equals(jarName)) {
-          if (jarName != null) {
+          if (!jarLines.isEmpty()) {
             packages.addAll(analyzeLines(packagesByJar, jarName, jarLines.stream(), packageDepth));
             jarLines.clear();
           }
@@ -48,7 +48,6 @@ public class JDepsAnalyzer {
 
   private Set<PackageRepresentation> analyzeLines(Map<String, Set<PackageRepresentationImplem>> packages, String jarName, Stream<String> lines, int packageDepth) {
     Map<String, Set<String>> representations = lines
-        .filter(line -> !line.matches(".*jar -> .*"))
         .map(line -> line.split("->"))
         .collect(Collectors.groupingBy(tokens -> tokens[0].strip(), 
             Collectors.mapping(tokens -> tokens[1], Collectors.toSet())));
