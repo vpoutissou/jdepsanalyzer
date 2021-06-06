@@ -1,4 +1,4 @@
-package com.efluid.jdepsanalyzer;
+package com.jdepsanalyzer;
 
 import java.util.List;
 import java.util.Set;
