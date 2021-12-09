@@ -4,7 +4,7 @@ Mainly for automatically indicating if there's a cycle in package dependencies b
 The purpose is to easily know if a package can be separated from a big jar into its own module
 
 ## Technical informations
-jdepsanalyzer is using Java 16 and JUnit 5.7.2 for running the tests
+jdepsanalyzer is using Java 17 and JUnit 5.8.2 for running the tests
 
 ## Usage
 Run jdeps on the jar and store the resut in a file.
